@@ -5,7 +5,9 @@ import Button from './Button';
 import classes from './ErrorModal.module.css';
 const ErrorModal = props => {
     return(
-        <Wrapper>
+        // react fragment does the same as wapper and <>
+        // can also be <Fragment> if imported as React, { Fragment }
+        <React.Fragment>
             <div className={classes.backdrop} onClick={props.onConfirm} />
             <Card className={classes.modal}>
                 <header className={classes.header}>
@@ -18,7 +20,7 @@ const ErrorModal = props => {
                     <Button onClick={props.onConfirm}>Ok</Button>
                 </footer>
             </Card>
-        </Wrapper>
+        </React.Fragment>
     )
 
 };

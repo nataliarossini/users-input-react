@@ -14,10 +14,11 @@ function App() {
     });
   }
   return (
-    <div>
+    // <> and </> does the same as wrapper
+    <>
       <AddUser onAddUser={addUserHandler}/>
       {usersList.length > 0 && <UsersList users={usersList} />}
-    </div>
+    </>
   );
 }
 
