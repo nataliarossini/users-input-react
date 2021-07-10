@@ -1,25 +1,46 @@
 import React from 'react';
+import ReactDom from 'react-dom';
 import Wrapper from '../Helpers/Wrapper';
 import Card from './Card';
 import Button from './Button';
 import classes from './ErrorModal.module.css';
+
+const Backdrop = props => {
+    return <div className={classes.backdrop} onClick={props.onConfirm} />
+};
+
+const ModalOverlay = props => {
+    return (
+        <Card className={classes.modal}>
+            <header className={classes.header}>
+                <h2>{props.title}</h2>
+            </header>
+            <div className={classes.content}>
+                <p>{props.message}</p>
+            </div>
+            <footer className={classes.actions}>
+                <Button onClick={props.onConfirm}>Ok</Button>
+            </footer>
+        </Card>
+    );
+};
 const ErrorModal = props => {
     return(
         // react fragment does the same as wapper and <>
         // can also be <Fragment> if imported as React, { Fragment }
         <React.Fragment>
-            <div className={classes.backdrop} onClick={props.onConfirm} />
-            <Card className={classes.modal}>
-                <header className={classes.header}>
-                    <h2>{props.title}</h2>
-                </header>
-                <div className={classes.content}>
-                    <p>{props.message}</p>
-                </div>
-                <footer className={classes.actions}>
-                    <Button onClick={props.onConfirm}>Ok</Button>
-                </footer>
-            </Card>
+            {ReactDom.createPortal(
+                <Backdrop onConfirm={props.onConfirm}/>, 
+                document.getElementById('backdrop-root')
+            )}
+            {ReactDom.createPortal(
+                <ModalOverlay 
+                    title={props.title}
+                    message={props.message}
+                    onConfirm={props.onConfirm}
+                />, 
+                document.getElementById('overlay-root')
+            )}
         </React.Fragment>
     )
 
